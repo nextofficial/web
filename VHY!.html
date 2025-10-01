@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VHY!</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="video-bg">
+    <video src="screen.mp4" autoplay muted loop playsinline></video>
+  </div>
+  <div class="overlay"></div>
+
+  <header>
+    <img src="brand logo.png" alt="">
+    <div class="brand">
+      <nav>
+        <a href="#/">Início</a>
+        <a href="#/portfolio" id="portfolio-link">Projetos
+          <div class="up-arrow" aria-hidden="true"></div>
+        </a>
+        <a href="#/about">Sobre</a>
+        <a href="#/contact">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="active">
+      <h1 id="typewriter"></h1>
+      <p><i>Editor de Vídeo Profissional</i></p>
+      <p><i>Serviço completo de edição de vídeos dinâmicos</i></p>
+
+      <div class="carousel">
+        <div class="carousel-track">
+          <img src="1.png" alt="1">
+          <img src="2.png" alt="2">
+          <img src="3.png" alt="3">
+          <img src="4.png" alt="4">
+          <img src="5.png" alt="5">
+          <img src="6.png" alt="6">
+          <img src="7.png" alt="7">
+          <!-- duplicadas -->
+          <img src="1.png" alt="1">
+          <img src="2.png" alt="2">
+          <img src="3.png" alt="3">
+          <img src="4.png" alt="4">
+          <img src="5.png" alt="5">
+          <img src="6.png" alt="6">
+          <img src="7.png" alt="7">
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO COM VÍDEOS -->
+    <section id="portfolio">
+      <h1>📺 Meus Vídeos do Canal</h1>
+      <div class="videos-container-portfolio">
+        <div class="playlist-portfolio">
+          <h2>🎬 Vídeos Longos</h2>
+          <div class="video-grid-portfolio" id="long-videos"></div>
+
+          <h2>Gameplay</h2>
+          <div class="video-grid-portfolio" id="gameplay"></div>
+
+          <h2>Enterprise</h2>
+          <div class="video-grid-portfolio" id="gameplay2"></div>
+        </div>
+
+        <div class="playlist-portfolio">
+          <h2>📱 Shorts</h2>
+          <div class="video-grid-portfolio" id="short-videos"></div>
+
+          <h2>Geral</h2>
+          <div class="video-grid-portfolio" id="geral"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h1>Quem sou eu?</h1>
+      <h2>Prazer, me chamo <span class="mecolor">Daniel Filipe Oliveira</span></h2>
+      <p>Com uma bagagem de <span class="mecolor">11 anos</span>, dedico total atenção aos detalhes para<span class="mecolor"> valorizar o seu trabalho</span>.<br><br>Atuo como profissional prestando serviços de forma independente. Sou entusiasta e autodidata na minha área e busco constantemente aprender e me aprimorar.</p>
+
+      <h3 class="mecolor">Ler mais...</h3>
+      <div id="lermais">
+        <div id="abouth3">
+          <div>
+            <h2 class="mecolor mecolorlight">DESIGN!</h2>
+            <p>Sigo o ritmo e o seu estilo de vídeo, garantindo uma <span class="mecolor">harmonia consistente</span>.<br><br> Caso prefira adotar um novo estilo, sinta-se à vontade, pois, além de <span class="mecolor">flexível</span>, sou um editor <span class="mecolor">adaptável</span>.</p>
+          </div>
+          <div>
+            <h2 class="mecolor mecolorlight">RESPONSABILIDADE!</h2>
+            <p>"Fui militar do Exército por 3 anos, onde pude adquirir <span class="mecolor">responsabilidade</span> e, eventualmente, uma <span class="mecolor">disciplina de aço</span>. <br> <br>Lá me desenvolvi como homem, me tornando mais comunicativo e prestativo.</p>
+          </div>
+          <div>
+            <h2 class="mecolor mecolorlight">FERRAMENTAS!</h2>
+            <p>Atualmente, trabalho com os melhores softwares do mercado, <span class="mecolor">Adobe Premiere</span> e <span class="mecolor">After Effects</span>.  <br><br>Sou apaixonado por edição e
+            entusiasta em aprender novas técnicas de motion, VFX e SFX.</p>
+          </div>
+        </div>
+        <div class="curri-btn"><a href="Currículo Daniel.pdf" download><button>Currículo para Empresas</button></a></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h1>Contato</h1>
+      <div class="contact-box">
+        <form id="contactForm">
+          <label for="name">Nome</label>
+          <input type="text" id="name" name="name" placeholder="Seu nome" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+
+          <label for="message">Mensagem</label>
+          <textarea id="message" name="message" rows="5" placeholder="Sua mensagem" required></textarea>
+
+          <button type="submit">Enviar</button>
+        </form>
+        <div class="success-message" id="successMessage">Mensagem enviada com sucesso!</div>
+        <a href="https://wa.me/5511988567651" target="_blank" class="whatsapp-btn">Me chame no WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="cursor"></div>
+  <audio id="intro-sound" src="VHY! intro sound.mp3"></audio>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="js.js"></script>
+</body>
+</html>
