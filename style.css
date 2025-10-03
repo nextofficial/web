@@ -129,7 +129,7 @@ section.active {
 #typewriter {
   display: inline-block;
   border-right: 2px solid var(--primary);
-  white-space: nowrap;
+  white-space: normal;
   overflow: hidden;
   animation: blinkCaret 0.7s step-end infinite;
 }
@@ -141,7 +141,7 @@ section.active {
 
 /* Carrossel */
 .carousel { position: relative; width: 100%; max-width: 2000px; height: 250px; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.6); margin: 2rem auto; }
-.carousel-track { display: flex; width: calc(400px * 14); animation: scroll 25s linear infinite; }
+.carousel-track { display: flex; width: calc(400px * 14); animation: scroll 10s linear infinite; }
 .carousel-track img { width: 400px; object-fit: cover; flex-shrink: 0; }
 @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-2800px); } }
 
@@ -215,7 +215,7 @@ section.active {
 .whatsapp-btn:hover { background-color: #1ebe57; }
 
 /* ----------------- PORTFOLIO VÍDEOS ----------------- */
-.videos-container-portfolio { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; margin: 2rem 0; }
+.videos-container-portfolio { display: flex; gap: 80px; flex-wrap: wrap; justify-content: center; margin: 2rem 0; }
 .playlist-portfolio {
   flex: 1 1 320px;
   display: flex;
