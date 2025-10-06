@@ -55,7 +55,6 @@
           <img src="5.png" alt="5">
           <img src="6.png" alt="6">
           <img src="7.png" alt="7">
-          <!-- duplicadas -->
           <img src="1.png" alt="1">
           <img src="2.png" alt="2">
           <img src="3.png" alt="3">
@@ -67,25 +66,20 @@
       </div>
     </section>
 
-    <!-- PORTFOLIO COM VÍDEOS -->
     <section id="portfolio">
       <div class="videos-container-portfolio">
         <div class="playlist-portfolio">
           <h2>🎬 Vídeos Longos</h2>
           <div class="video-grid-portfolio" id="long-videos"></div>
-
-          <h2>____Gameplay____</h2>
+          <h2>____Games____</h2>
           <div class="video-grid-portfolio" id="gameplay"></div>
-
-          <h2>____Enterprise____</h2>
+          <h2>____Corporativos____</h2>
           <div class="video-grid-portfolio" id="gameplay2"></div>
         </div>
-
         <div class="playlist-portfolio">
           <h2>📱 Shorts</h2>
           <div class="video-grid-portfolio" id="short-videos"></div>
-
-          <h2>____Geral____</h2>
+          <h2>____Gerais____</h2>
           <div class="video-grid-portfolio" id="geral"></div>
         </div>
       </div>
@@ -113,7 +107,9 @@
             entusiasta em aprender novas técnicas de motion, VFX e SFX.</p>
           </div>
         </div>
-        <div class="curri-btn"><a href="Currículo Daniel.pdf" download><button>Currículo para Empresas</button></a></div>
+        <div class="curri-btn">
+          <button id="curriculoBtn"><i class="fa-solid fa-caret-down"></i> Currículo para Empresas <i class="fa-solid fa-caret-down"></i></button>
+        </div>
       </div>
     </section>
 
@@ -123,13 +119,10 @@
         <form id="contactForm">
           <label for="name">Nome</label>
           <input type="text" id="name" name="name" placeholder="Seu nome" required>
-
           <label for="email">Email</label>
           <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-
           <label for="message">Mensagem</label>
           <textarea id="message" name="message" rows="5" placeholder="Sua mensagem" required></textarea>
-
           <button type="submit">Enviar</button>
         </form>
         <div class="success-message" id="successMessage">Mensagem enviada com sucesso!</div>
@@ -140,6 +133,18 @@
 
   <div class="cursor"></div>
   <audio id="intro-sound" src="VHY! intro sound.mp3"></audio>
+
+  <div id="popup" class="popup hidden">
+    <div class="popup-content">
+      <h2>📄 Currículo</h2>
+      <p>Deseja <span class="mecolor">baixar</span> o currículo ou <span class="mecolor">visualizar online</span>?</p>
+      <div class="popup-buttons">
+        <a href="Currículo Daniel.pdf" download class="popup-btn">Baixar</a>
+        <a href="Currículo Daniel.pdf" target="_blank" class="popup-btn">Visualizar</a>
+      </div>
+      <button class="popup-close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  </div>
 
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script src="js.js"></script>
