@@ -183,3 +183,16 @@ section.active { display: flex; }
   font-size: 1.3rem;
   cursor: pointer;
 }
+
+@media (max-width: 700px) {
+  .video-bg video {
+    left: auto;       
+    right: 0;           
+    transform: translate(0, -50%); 
+    width: auto;      
+    min-width: 100%;    
+    min-height: 100%;   
+      filter: brightness(1.2);
+
+  }
+}
