@@ -3,6 +3,7 @@ const audio = document.getElementById('intro-sound');
 const portfolioLink = document.getElementById('portfolio-link');
 const upArrow = document.querySelector('.up-arrow');
 const navLinks = document.querySelectorAll('nav a');
+
 function navigate() {
   const hash = location.hash || '#/';
   sections.forEach(sec => sec.classList.remove('active'));
@@ -25,6 +26,7 @@ function navigate() {
     upArrow.style.display = 'block';
   }
 }
+
 window.addEventListener('hashchange', navigate);
 navigate();
 
@@ -72,6 +74,9 @@ lerMaisBtn.addEventListener('click', () => {
 });
 lerMaisContent.classList.remove('active');
 
+// ===============================
+//   YouTube API - playlists
+// ===============================
 const API_KEY = 'AIzaSyB3Di73heLvjvrv1tDpW__qg0R2eZgzwU8';
 const PLAYLIST_LONGOS = '';
 const PLAYLIST_SHORTS = '';
@@ -82,9 +87,12 @@ const PLAYLIST_GERAL = 'PLBXuZM12Ec4zyKAFW2BFqBsSVNTTLJrPI';
 async function fetchPlaylist(playlistId, containerId) {
   const container = document.getElementById(containerId);
   if (!playlistId) return;
+
   const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=12&playlistId=${playlistId}&key=${API_KEY}`);
   const data = await res.json();
   if (!data.items) return;
+
+  // Adiciona vídeos novos no topo
   data.items.forEach(item => {
     const videoId = item.snippet.resourceId.videoId;
     const thumbnail = item.snippet.thumbnails.high.url;
@@ -94,24 +102,31 @@ async function fetchPlaylist(playlistId, containerId) {
     card.addEventListener('click', () => {
       window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
     });
-    container.appendChild(card);
+    container.prepend(card); // 👈 Adiciona no topo
   });
 }
+
 fetchPlaylist(PLAYLIST_LONGOS, 'long-videos');
 fetchPlaylist(PLAYLIST_SHORTS, 'short-videos');
 fetchPlaylist(PLAYLIST_GAMEPLAY, 'gameplay');
 fetchPlaylist(PLAYLIST_GAMEPLAY2, 'gameplay2');
 fetchPlaylist(PLAYLIST_GERAL, 'geral');
 
+// ===============================
+//   Popup Currículo
+// ===============================
 const popup = document.getElementById('popup');
 const closePopup = document.querySelector('.popup-close');
 const curriculoBtn = document.getElementById('curriculoBtn');
+
 curriculoBtn.addEventListener('click', () => {
   popup.classList.remove('hidden');
 });
+
 closePopup.addEventListener('click', () => {
   popup.classList.add('hidden');
 });
+
 popup.addEventListener('click', e => {
   if (e.target === popup) popup.classList.add('hidden');
 });
