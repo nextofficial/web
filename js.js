@@ -89,8 +89,6 @@ lerMaisBtn.addEventListener('click', () => {
 lerMaisContent.classList.remove('active');
 
 const API_KEY = 'AIzaSyB3Di73heLvjvrv1tDpW__qg0R2eZgzwU8';
-const PLAYLIST_LONGOS = '';
-const PLAYLIST_SHORTS = '';
 const PLAYLIST_GAMEPLAY = 'PLBXuZM12Ec4wOYUSnSl-gVLar6TYC3BHu';
 const PLAYLIST_GAMEPLAY2 = 'PLBXuZM12Ec4z0XHrfDLDNAuJKTW73vc5m';
 const PLAYLIST_GERAL = 'PLBXuZM12Ec4zyKAFW2BFqBsSVNTTLJrPI';
@@ -101,6 +99,7 @@ async function fetchPlaylist(playlistId, containerId) {
 
   const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=12&playlistId=${playlistId}&key=${API_KEY}`);
   const data = await res.json();
+  console.log('YouTube API response:', data); // <-- debug
   if (!data.items) return;
 
   data.items.forEach(item => {
@@ -116,8 +115,6 @@ async function fetchPlaylist(playlistId, containerId) {
   });
 }
 
-fetchPlaylist(PLAYLIST_LONGOS, 'long-videos');
-fetchPlaylist(PLAYLIST_SHORTS, 'short-videos');
 fetchPlaylist(PLAYLIST_GAMEPLAY, 'gameplay');
 fetchPlaylist(PLAYLIST_GAMEPLAY2, 'gameplay2');
 fetchPlaylist(PLAYLIST_GERAL, 'geral');
