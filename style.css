@@ -104,6 +104,19 @@ section.active { display: flex; }
 }
 @keyframes bob { 0%,100%{transform:translateX(-50%)translateY(0);}50%{transform:translateX(-50%)translateY(-3px);} }
 
+.about-arrow {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 18px solid var(--primary);
+  z-index: 9999;
+  animation: bob 0.6s ease-in-out infinite;
+}
+
 #about p { max-width: 730px; text-align: justify; }
 .mecolor { color: var(--primary); }
 .mecolorlight { text-shadow: 1px 1px 10px var(--primary); }
@@ -120,6 +133,10 @@ section.active { display: flex; }
 #about h3.mecolor { cursor: pointer; transition: opacity 0.3s ease; }
 #about h3.mecolor.fade-out { opacity: 0; }
 
+#lermais div{
+  justify-content: center;
+  align-items: center;
+}
 .contact-box { background-color: rgba(20,20,20,0.95); padding: 2rem; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 0 20px rgba(0,0,0,0.668); margin-top: 2rem; }
 .contact-box label { display: block; margin-top: 1rem; font-weight: 600; }
 .contact-box input,
@@ -192,7 +209,16 @@ section.active { display: flex; }
     width: auto;      
     min-width: 100%;    
     min-height: 100%;   
-      filter: brightness(1.2);
-
+    filter: brightness(1.2);
   }
+}
+.brandlogotittle{
+  width: 256px;
+}
+
+.sobre-resumo{
+  width: 80%;
+}
+.sobre-nome{
+  text-align: center;
 }

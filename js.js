@@ -46,7 +46,7 @@ portfolioLink.addEventListener('click', () => {
   }, 200);
 });
 
-const text = "Seja bem-vindo(a) querido(a), eu sou o VHY!";
+const text = "Seja bem-vindo(a) querido(a), eu sou o Next!";
 let i = 0;
 function typeWriter() {
   if (i < text.length) {
@@ -65,18 +65,29 @@ document.addEventListener('mousemove', e => {
 
 const lerMaisBtn = document.querySelector('#about h3.mecolor');
 const lerMaisContent = document.getElementById('lermais');
+
+const aboutArrow = document.createElement('div');
+aboutArrow.classList.add('about-arrow');
+lerMaisBtn.style.position = 'relative';
+lerMaisBtn.appendChild(aboutArrow);
+
 lerMaisBtn.addEventListener('click', () => {
   lerMaisContent.classList.toggle('active');
   lerMaisBtn.classList.toggle('fade-out');
-  setTimeout(() => {
-    lerMaisBtn.style.display = lerMaisContent.classList.contains('active') ? 'none' : 'block';
-  }, 300);
+
+  if (lerMaisContent.classList.contains('active')) {
+    aboutArrow.style.display = 'none';
+    setTimeout(() => {
+      lerMaisBtn.style.display = 'none';
+    }, 300);
+  } else {
+    lerMaisBtn.style.display = 'block';
+    aboutArrow.style.display = 'block';
+  }
 });
+
 lerMaisContent.classList.remove('active');
 
-// ===============================
-//   YouTube API - playlists
-// ===============================
 const API_KEY = 'AIzaSyB3Di73heLvjvrv1tDpW__qg0R2eZgzwU8';
 const PLAYLIST_LONGOS = '';
 const PLAYLIST_SHORTS = '';
@@ -92,7 +103,6 @@ async function fetchPlaylist(playlistId, containerId) {
   const data = await res.json();
   if (!data.items) return;
 
-  // Adiciona vídeos novos no topo
   data.items.forEach(item => {
     const videoId = item.snippet.resourceId.videoId;
     const thumbnail = item.snippet.thumbnails.high.url;
@@ -102,7 +112,7 @@ async function fetchPlaylist(playlistId, containerId) {
     card.addEventListener('click', () => {
       window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
     });
-    container.prepend(card); // 👈 Adiciona no topo
+    container.prepend(card);
   });
 }
 
@@ -112,9 +122,6 @@ fetchPlaylist(PLAYLIST_GAMEPLAY, 'gameplay');
 fetchPlaylist(PLAYLIST_GAMEPLAY2, 'gameplay2');
 fetchPlaylist(PLAYLIST_GERAL, 'geral');
 
-// ===============================
-//   Popup Currículo
-// ===============================
 const popup = document.getElementById('popup');
 const closePopup = document.querySelector('.popup-close');
 const curriculoBtn = document.getElementById('curriculoBtn');
