@@ -1,13 +1,16 @@
+// Seleção de elementos
 const sections = document.querySelectorAll('main section');
 const audio = document.getElementById('intro-sound');
 const portfolioLink = document.getElementById('portfolio-link');
 const upArrow = document.querySelector('.up-arrow');
 const navLinks = document.querySelectorAll('nav a');
 
+// Navegação entre seções
 function navigate() {
   const hash = location.hash || '#/';
   sections.forEach(sec => sec.classList.remove('active'));
   navLinks.forEach(link => link.classList.remove('active'));
+
   if (hash === '#/portfolio') {
     document.querySelector('#portfolio').classList.add('active');
     portfolioLink.classList.add('active');
@@ -30,12 +33,14 @@ function navigate() {
 window.addEventListener('hashchange', navigate);
 navigate();
 
+// Efeito de clique no logo da home
 portfolioLink.addEventListener('click', () => {
   audio.volume = 0.3;
   audio.currentTime = 0;
   audio.play().catch(() => {
     document.addEventListener('click', () => audio.play(), { once: true });
   });
+
   const logo = document.querySelector('header img');
   const originalSrc = logo.src;
   logo.src = "brand logo2.png";
@@ -46,6 +51,7 @@ portfolioLink.addEventListener('click', () => {
   }, 200);
 });
 
+// Efeito máquina de escrever
 const text = "Seja bem-vindo(a) querido(a), eu sou o Next!";
 let i = 0;
 function typeWriter() {
@@ -57,15 +63,16 @@ function typeWriter() {
 }
 typeWriter();
 
+// Cursor customizado
 const cursor = document.querySelector('.cursor');
 document.addEventListener('mousemove', e => {
   cursor.style.top = e.clientY + 'px';
   cursor.style.left = e.clientX + 'px';
 });
 
+// Ler mais sobre
 const lerMaisBtn = document.querySelector('#about h3.mecolor');
 const lerMaisContent = document.getElementById('lermais');
-
 const aboutArrow = document.createElement('div');
 aboutArrow.classList.add('about-arrow');
 lerMaisBtn.style.position = 'relative';
@@ -85,40 +92,77 @@ lerMaisBtn.addEventListener('click', () => {
     aboutArrow.style.display = 'block';
   }
 });
-
 lerMaisContent.classList.remove('active');
 
+// ===========================
+// CONFIGURAÇÃO DA API
+// ===========================
 const API_KEY = 'AIzaSyB3Di73heLvjvrv1tDpW__qg0R2eZgzwU8';
-const PLAYLIST_GAMEPLAY = 'PLBXuZM12Ec4wOYUSnSl-gVLar6TYC3BHu';
-const PLAYLIST_GAMEPLAY2 = 'PLBXuZM12Ec4z0XHrfDLDNAuJKTW73vc5m';
-const PLAYLIST_GERAL = 'PLBXuZM12Ec4zyKAFW2BFqBsSVNTTLJrPI';
 
-async function fetchPlaylist(playlistId, containerId) {
-  const container = document.getElementById(containerId);
-  if (!playlistId) return;
+const playlists = {
+  gameplay: { id: 'PLBXuZM12Ec4wOYUSnSl-gVLar6TYC3BHu', container: 'gameplay' },
+  corporativos: { id: 'PLBXuZM12Ec4z0XHrfDLDNAuJKTW73vc5m', container: 'corporativos' },
+  geral: { id: 'PLBXuZM12Ec4zyKAFW2BFqBsSVNTTLJrPI', container: 'geral' }
+};
 
-  const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=12&playlistId=${playlistId}&key=${API_KEY}`);
-  const data = await res.json();
-  console.log('YouTube API response:', data); // <-- debug
-  if (!data.items) return;
+// ===========================
+// FUNÇÃO PARA BUSCAR VÍDEOS
+// ===========================
+async function fetchVideos(playlistKey) {
+  const playlist = playlists[playlistKey];
+  const container = document.getElementById(playlist.container);
+  if (!playlist || !container) return;
 
-  data.items.forEach(item => {
-    const videoId = item.snippet.resourceId.videoId;
-    const thumbnail = item.snippet.thumbnails.high.url;
-    const card = document.createElement('div');
-    card.classList.add('video-card-portfolio');
-    card.innerHTML = `<img src="${thumbnail}" alt="Vídeo">`;
-    card.addEventListener('click', () => {
-      window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+  try {
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlist.id}&key=${API_KEY}`);
+    const data = await res.json();
+
+    if (!data.items || data.items.length === 0) return;
+
+    container.innerHTML = ''; // limpa antes de renderizar a playlist inteira
+
+    // ===== ALTERAÇÃO: Ordem invertida =====
+    data.items.reverse().forEach(item => {
+      const snippet = item.snippet;
+      if (!snippet || !snippet.resourceId || !snippet.resourceId.videoId) return;
+
+      const videoId = snippet.resourceId.videoId;
+      const title = snippet.title;
+
+      // Ignora vídeos privados ou deletados
+      if (title === "Private video" || title === "Deleted video") return;
+
+      const thumbnail = snippet.thumbnails?.high?.url || '';
+
+      const card = document.createElement('div');
+      card.classList.add('video-card-portfolio'); // CSS controla grid e estilo
+      card.innerHTML = `
+        ${thumbnail ? `<img src="${thumbnail}" alt="${title}">` : `<div style="height:100px; background:#222; display:flex; align-items:center; justify-content:center; color:#fff;">Sem thumbnail</div>`}
+        <p>${title}</p>
+      `;
+
+      card.addEventListener('click', () => {
+        window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+      });
+
+      container.appendChild(card);
+      console.log(`Adicionado vídeo: ${title} no container: ${playlist.container}`);
     });
-    container.prepend(card);
-  });
+
+  } catch (err) {
+    console.error('Erro ao buscar vídeos da playlist', playlistKey, err);
+  }
 }
 
-fetchPlaylist(PLAYLIST_GAMEPLAY, 'gameplay');
-fetchPlaylist(PLAYLIST_GAMEPLAY2, 'gameplay2');
-fetchPlaylist(PLAYLIST_GERAL, 'geral');
+// ===========================
+// CHAMADAS DAS PLAYLISTS
+// ===========================
+fetchVideos('gameplay');
+fetchVideos('corporativos');
+fetchVideos('geral');
 
+// ===========================
+// Popup do currículo
 const popup = document.getElementById('popup');
 const closePopup = document.querySelector('.popup-close');
 const curriculoBtn = document.getElementById('curriculoBtn');

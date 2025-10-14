@@ -1,130 +1,84 @@
-<div id="youtube-section">
-  <h1>📺 Meus Vídeos do Canal</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Teste Playlists YouTube</title>
+</head>
+<body style="background:#000; color:#fff; font-family:sans-serif;">
 
-  <div class="videos-container">
-    <!-- Playlist de vídeos longos -->
-    <div class="playlist">
-      <h2>🎬 Vídeos Longos</h2>
-      <div class="video-grid" id="long-videos"></div>
+<h1>🎬 Vídeos Longos</h1>
+<h2>____Games____</h2>
+<div id="gameplay" class="video-grid"></div>
 
-      <h2>Gameplay</h2>
-      <div class="video-grid" id="gameplay"></div>
+<h2>____Corporativos____</h2>
+<div id="corporativos" class="video-grid"></div>
 
-      <h2>Enterprise</h2>
-      <div class="video-grid" id="enterprise"></div>
-    </div>
+<h1>📱 Shorts</h1>
+<h2>____Gerais____</h2>
+<div id="geral" class="video-grid"></div>
 
-    <!-- Playlist de shorts -->
-    <div class="playlist">
-      <h2>📱 Shorts</h2>
-      <div class="video-grid" id="short-videos"></div>
+<script>
+const API_KEY = 'AIzaSyB3Di73heLvjvrv1tDpW__qg0R2eZgzwU8';
+const PLAYLIST_GAMEPLAY = 'PLBXuZM12Ec4wOYUSnSl-gVLar6TYC3BHu';
+const PLAYLIST_CORPORATIVOS = 'PLBXuZM12Ec4z0XHrfDLDNAuJKTW73vc5m';
+const PLAYLIST_GERAL = 'PLBXuZM12Ec4zyKAFW2BFqBsSVNTTLJrPI';
 
-      <h2>Geral</h2>
-      <div class="video-grid" id="geral"></div>
-    </div>
-  </div>
+async function fetchPlaylist(playlistId, containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = ''; // limpa container
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${API_KEY}`;
 
-  <style>
-    #youtube-section {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
-      color: #333;
-    }
-    #youtube-section h1 {
-      text-align: center;
-      color: #8422DC;
-      margin-bottom: 40px;
-    }
-    #youtube-section h2 {
-      margin: 20px 0 10px;
-      color: #8422DC;
-      text-align: center;
-    }
-    .videos-container {
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-    .playlist {
-      flex: 1;
-      min-width: 320px;
-    }
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-bottom: 25px;
-    }
-    .video-card {
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease;
-      cursor: pointer; /* cursor pointer para toda a div */
-    }
-    .video-card:hover {
-      transform: translateY(-5px);
-    }
-    .thumbnail {
-      width: 100%;
-      display: block;
-    }
-    .video-info {
-      padding: 10px 15px;
-    }
-    .video-info h3 {
-      font-size: 16px;
-      margin: 0;
-      color: #333;
-      line-height: 1.3em;
-    }
-    .video-info a {
-      display: none; /* remove o botão */
-    }
-  </style>
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
 
-  <script>
-    const API_KEY = 'AIzaSyB3Di73heLvjvrv1tDpW__qg0R2eZgzwU8';
+        if (!data.items || data.items.length === 0) {
+            container.innerHTML = '<p>Nenhum vídeo encontrado.</p>';
+            return;
+        }
 
-    // IDs das playlists
-    const PLAYLIST_GAMEPLAY   = 'PLBXuZM12Ec4wOYUSnSl-gVLar6TYC3BHu';
-    const PLAYLIST_ENTERPRISE = 'PLBXuZM12Ec4z0XHrfDLDNAuJKTW73vc5m';
-    const PLAYLIST_GERAL      = 'PLBXuZM12Ec4zyKAFW2BFqBsSVNTTLJrPI';
+        data.items.forEach(item => {
+            // Verificação completa
+            if (!item.snippet || !item.snippet.resourceId || !item.snippet.resourceId.videoId) return;
+            
+            const videoId = item.snippet.resourceId.videoId;
+            const title = item.snippet.title;
 
-    async function fetchPlaylist(playlistId, containerId) {
-      if (!playlistId) return;
-      const container = document.getElementById(containerId);
-      const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=12&playlistId=${playlistId}&key=${API_KEY}`);
-      const data = await res.json();
+            // Ignora vídeos privados/deletados
+            if (title === "Private video" || title === "Deleted video") return;
 
-      data.items.forEach(item => {
-        const videoId = item.snippet.resourceId.videoId;
-        const title = item.snippet.title;
-        const thumbnail = item.snippet.thumbnails.high.url;
+            const thumbnail = item.snippet.thumbnails?.high?.url || '';
 
-        const card = document.createElement('div');
-        card.classList.add('video-card');
-        card.innerHTML = `
-          <img class="thumbnail" src="${thumbnail}" alt="${title}">
-          <div class="video-info">
-            <h3>${title}</h3>
-          </div>
-        `;
+            // Cria card visual
+            const card = document.createElement('div');
+            card.classList.add('video-card');
+            card.style.display = 'inline-block';
+            card.style.margin = '10px';
+            card.style.cursor = 'pointer';
+            card.style.width = '200px';
+            card.innerHTML = `
+                ${thumbnail ? `<img src="${thumbnail}" alt="${title}" style="width:100%; border-radius:8px;">` : ''}
+                <p style="color:#fff;">${title}</p>
+            `;
 
-        // Adiciona click na div inteira para abrir o vídeo
-        card.addEventListener('click', () => {
-          window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+            card.addEventListener('click', () => {
+                window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+            });
+
+            container.appendChild(card);
         });
 
-        container.appendChild(card);
-      });
+    } catch (err) {
+        console.error('Erro ao buscar playlist:', err);
+        container.innerHTML = '<p>Erro ao carregar vídeos.</p>';
     }
+}
 
-    // Carregar playlists
-    fetchPlaylist(PLAYLIST_GAMEPLAY, 'gameplay');
-    fetchPlaylist(PLAYLIST_ENTERPRISE, 'enterprise');
-    fetchPlaylist(PLAYLIST_GERAL, 'geral');
-  </script>
-</div>
+// Chamadas para as 3 playlists
+fetchPlaylist(PLAYLIST_GAMEPLAY, 'gameplay');
+fetchPlaylist(PLAYLIST_CORPORATIVOS, 'corporativos');
+fetchPlaylist(PLAYLIST_GERAL, 'geral');
+
+</script>
+</body>
+</html>
