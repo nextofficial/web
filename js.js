@@ -94,74 +94,6 @@ lerMaisBtn.addEventListener('click', () => {
 });
 lerMaisContent.classList.remove('active');
 
-// ===========================
-// CONFIGURAÇÃO DA API
-// ===========================
-const API_KEY = 'AIzaSyB3Di73heLvjvrv1tDpW__qg0R2eZgzwU8';
-
-const playlists = {
-  gameplay: { id: 'PLBXuZM12Ec4wOYUSnSl-gVLar6TYC3BHu', container: 'gameplay' },
-  corporativos: { id: 'PLBXuZM12Ec4z0XHrfDLDNAuJKTW73vc5m', container: 'corporativos' },
-  geral: { id: 'PLBXuZM12Ec4zyKAFW2BFqBsSVNTTLJrPI', container: 'geral' }
-};
-
-// ===========================
-// FUNÇÃO PARA BUSCAR VÍDEOS
-// ===========================
-async function fetchVideos(playlistKey) {
-  const playlist = playlists[playlistKey];
-  const container = document.getElementById(playlist.container);
-  if (!playlist || !container) return;
-
-  try {
-    const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlist.id}&key=${API_KEY}`);
-    const data = await res.json();
-
-    if (!data.items || data.items.length === 0) return;
-
-    container.innerHTML = ''; // limpa antes de renderizar a playlist inteira
-
-    // ===== ALTERAÇÃO: Ordem invertida =====
-    data.items.reverse().forEach(item => {
-      const snippet = item.snippet;
-      if (!snippet || !snippet.resourceId || !snippet.resourceId.videoId) return;
-
-      const videoId = snippet.resourceId.videoId;
-      const title = snippet.title;
-
-      // Ignora vídeos privados ou deletados
-      if (title === "Private video" || title === "Deleted video") return;
-
-      const thumbnail = snippet.thumbnails?.high?.url || '';
-
-      const card = document.createElement('div');
-      card.classList.add('video-card-portfolio'); // CSS controla grid e estilo
-      card.innerHTML = `
-        ${thumbnail ? `<img src="${thumbnail}" alt="${title}">` : `<div style="height:100px; background:#222; display:flex; align-items:center; justify-content:center; color:#fff;">Sem thumbnail</div>`}
-        <p>${title}</p>
-      `;
-
-      card.addEventListener('click', () => {
-        window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
-      });
-
-      container.appendChild(card);
-      console.log(`Adicionado vídeo: ${title} no container: ${playlist.container}`);
-    });
-
-  } catch (err) {
-    console.error('Erro ao buscar vídeos da playlist', playlistKey, err);
-  }
-}
-
-// ===========================
-// CHAMADAS DAS PLAYLISTS
-// ===========================
-fetchVideos('gameplay');
-fetchVideos('corporativos');
-fetchVideos('geral');
-
-// ===========================
 // Popup do currículo
 const popup = document.getElementById('popup');
 const closePopup = document.querySelector('.popup-close');
@@ -178,3 +110,5 @@ closePopup.addEventListener('click', () => {
 popup.addEventListener('click', e => {
   if (e.target === popup) popup.classList.add('hidden');
 });
+
+

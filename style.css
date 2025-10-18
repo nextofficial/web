@@ -3,7 +3,7 @@
   --secondary: #FFFFFF;
   --dark-bg: #0a0a0a;
   --dark-text: #f9f9f9;
-  --background: #1515152e;
+  --background: #15151536;
 }
 
 body {
@@ -142,28 +142,18 @@ section.active { display: flex; }
   justify-content: center;
   align-items: center;
 }
-.contact-box { background-color: rgba(20,20,20,0.95); padding: 2rem; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 0 20px rgba(0,0,0,0.668); margin-top: 2rem; }
-.contact-box label { display: block; margin-top: 1rem; font-weight: 600; }
+.contact-box { background-color: rgba(20,20,20,0.95); padding: 1rem 2rem;  border-radius: 10%; width: 100%; max-width: 400px; box-shadow: 0 0 20px rgba(0,0,0,0.668); margin-top: 2rem; }
+.contact-box label { display: block; font-weight: 600;}
 .contact-box input,
-.contact-box textarea { width: 100%; padding: 0.7rem; margin-top: 0.3rem; border: none; border-radius: 6px; background-color: #1a1a1a; color: var(--secondary); resize: none; font-family: 'Inter', sans-serif; }
+.contact-box textarea { width: 90%; padding: 0.7rem; margin-top: 0.3rem; border: none; border-radius: 6px; background-color: #1a1a1a; color: var(--secondary); resize: none; font-family: 'Inter', sans-serif; }
 .contact-box input:focus,
 .contact-box textarea:focus { outline: 2px solid var(--primary); }
 .contact-box button { margin-top: 1.5rem; width: 100%; padding: 0.8rem; border: none; border-radius: 6px; background-color: var(--primary); color: #fff; font-size: 1rem; cursor: pointer; transition: transform 0.2s, background-color 0.2s; }
 .contact-box button:hover { background-color: #9b44ef; transform: scale(1.05); }
-.success-message { margin-top: 1rem; text-align: center; color: #33ff88; opacity: 0; transition: opacity 0.5s; }
+.success-message { text-align: center; color: #33ff88; opacity: 0; transition: opacity 0.5s; }
 .success-message.show { opacity: 1; }
-.whatsapp-btn { display: block; text-align: center; margin-top: 1rem; padding: 12px; background-color: #25d366; color: #fff; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
+.whatsapp-btn { display: block; text-align: center; padding: 12px; background-color: #25d366; color: #fff; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
 .whatsapp-btn:hover { background-color: #1ebe57; }
-
-.videos-container-portfolio { display: flex; gap: 80px; flex-wrap: wrap; justify-content: center; margin: 2rem 0;}
-.playlist-portfolio { flex: 1 1 320px; display: flex; flex-direction: column; }
-.video-grid-portfolio { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; margin-top: 10px; }
-.video-card-portfolio { background: var(--background); border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform 0.2s ease;}
-.video-card-portfolio:hover { transform: translateY(-5px); }
-.video-card-portfolio img { width: 100%; display: block; object-fit: cover; aspect-ratio: 16/9; }
-.video-card-portfolio p{
-  font-size: 0.7em;
-}
 
 .popup.hidden { display: none; }
 .popup {
@@ -229,4 +219,34 @@ section.active { display: flex; }
 }
 .sobre-nome{
   text-align: center;
+}
+
+#portfolio {
+  width: 100%;
+  height: 100vh; /* altura da tela */
+  
+  justify-content: center;
+  align-items: stretch; /* iframe ocupará toda a altura */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden; /* remove scroll externo */
+}
+
+/* iframe ocupa 100% da seção */
+#portfolio-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  
+}
+
+#contact.active {
+  padding-top: 10px; /* ajusta a distância do topo */
+}
+#contact.active h1{
+  margin: 0;
+  padding: 0;
 }

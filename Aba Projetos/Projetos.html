@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cards Interativos</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --primary: #8422DC;
+  --secondary: #FFFFFF;
+  --dark-bg: #0a0a0a;
+  --dark-text: #f9f9f9;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  color: var(--dark-text);
+  overflow-x: hidden;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 2rem;
+}
+header h1{
+  font-weight: bolder;
+}
+h1 { color: var(--primary); }
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin: 2rem;
+}
+.card {
+  width: 150px;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card img { width: 100%; border-radius: 8px; display: block; }
+
+.card-glow-1:hover { box-shadow: 0 0 15px #2fe3ff; transform: scale(1.05); }
+.card-glow-2:hover { box-shadow: 0 0 15px #dc225a; transform: scale(1.05); }
+.card-glow-3:hover { box-shadow: 0 0 15px #dc8f22; transform: scale(1.05); }
+.card-glow-4:hover { box-shadow: 0 0 15px #dcc622; transform: scale(1.05); }
+.card-glow-5:hover { box-shadow: 0 0 15px #8522dc; transform: scale(1.05); }
+.card-glow-6:hover { box-shadow: 0 0 15px #DC8222; transform: scale(1.05); }
+.card-glow-7:hover { box-shadow: 0 0 15px #1148ff; transform: scale(1.05); }
+
+#backArrow {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 50px; height: 50px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 2rem;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+#backArrow.show { display: block; }
+#backArrow:hover { transform: scale(1.2); background: #6b1db8; }
+
+.playlists-wrapper {
+  display: none;
+  flex-direction: column;
+  gap: 40px;
+  margin: 2rem;
+}
+
+.playlist {
+  display: none; 
+  flex-direction: column;
+  width: 100%; 
+  align-items: center;
+}
+
+.playlist-title {
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.video-grid-portfolio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px; 
+  width: 100%;
+  max-width: 900px;
+  justify-items: center;
+}
+
+@media (max-width: 900px) {
+  .video-grid-portfolio {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+}
+
+@media (max-width: 600px) {
+  .video-grid-portfolio {
+    grid-template-columns: 1fr;
+    gap: 20px 0;
+  }
+}
+
+.video-card-portfolio {
+  width: 230px;
+  height: 129px;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.video-card-portfolio:hover { transform: translateY(-5px); }
+.video-card-portfolio img {
+  width: 230px;
+  height: 129px;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+/* centraliza a imagem "no videos" */
+#noVideosImg {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 999;
+  max-width: 300px;
+}
+#noVideosImg {
+  max-width: 300px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+
+  /* Animação simples de rotação ±10° */
+  animation: wiper 1s ease-in-out infinite;
+  transform-origin: center center; /* pivô no centro da imagem */
+}
+
+@keyframes wiper {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  25%  { transform: translate(-50%, -50%) rotate(5deg); }
+  50%  { transform: translate(-50%, -50%) rotate(0deg); }
+  75%  { transform: translate(-50%, -50%) rotate(-5deg); }
+  100% { transform: translate(-50%, -50%) rotate(0deg); }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i>NICHOS!</i></h1>
+</header>
+
+<main>
+  <div class="cards-container" id="cardsContainer">
+    <div class="card card-glow-1"><img src="/Imgs/LEAGUE OF LEGENDS.png" alt="Card 1"></div>
+    <div class="card card-glow-2"><img src="/Imgs/VALORANT.png" alt="Card 2"></div>
+    <div class="card card-glow-3"><img src="/Imgs/COUNTER STRIKE.png" alt="Card 3"></div>
+    <div class="card card-glow-4"><img src="/Imgs/MINECRAFT.png" alt="Card 4"></div>
+    <div class="card card-glow-5"><img src="/Imgs/PODCAST.png" alt="Card 5"></div>
+    <div class="card card-glow-6"><img src="/Imgs/CORPORATIVO.png" alt="Card 6"></div>
+    <div class="card card-glow-7"><img src="/Imgs/GERAL.png" alt="Card 7"></div>
+  </div>
+
+  <div class="playlists-wrapper" id="videosContainer">
+    <div class="playlist" id="playlist1"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist2"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist3"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist4"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist5"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist6"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist7"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist8"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist9"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist10"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist11"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist12"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist13"><div class="video-grid-portfolio"></div></div>
+    <div class="playlist" id="playlist14"><div class="video-grid-portfolio"></div></div>
+  </div>
+
+  <img id="noVideosImg" src="/Imgs/novideos.png" alt="Sem vídeos disponíveis">
+  <div id="backArrow"><i class="fa-solid fa-arrow-left"></i></div>
+</main>
+
+<script>
+/*
+  Implementação: solução 2 (cache local)
+  - playlistCache armazena o resultado (array de items) para cada playlist key.
+  - Preload em background: chamamos loadPlaylist para todas as playlists no carregamento
+    (sem bloquear a interação). Assim, na maioria dos casos o cache já estará cheio
+    quando o usuário clicar — clique instantâneo.
+  - Ao clicar, usamos o cache (se existir). Se não existir (fetch falhou antes), fazemos
+    fetch naquele momento e armazenamos.
+*/
+
+const cardsContainer = document.getElementById('cardsContainer');
+const backArrow = document.getElementById('backArrow');
+const videosContainer = document.getElementById('videosContainer');
+const noVideosImg = document.getElementById('noVideosImg');
+
+const playlists = {
+  playlist1: 'PLBXuZM12Ec4wOYUSnSl-gVLar6TYC3BHu',
+  playlist2: 'PLBXuZM12Ec4yvGOju3PWQ0vLmD8RlHC8c',
+  playlist3: 'PLBXuZM12Ec4yognqvoegJMDjWkltUBBRG',
+  playlist4: 'PLBXuZM12Ec4y7NOU5M3G-bedPUiwv6P2I',
+  playlist5: 'PLBXuZM12Ec4y5hBO-whMrj5XswGWtRYvx',
+  playlist6: 'PLBXuZM12Ec4ydmF1lNZ1W-Z8JnYYMLLxp',
+  playlist7: 'PLBXuZM12Ec4w0USCJvR_ZFaX6gS4U0KQp',
+  playlist8: 'PLBXuZM12Ec4z9xwfMdzy3wOf9IwV0kT1-',
+  playlist9: 'PLBXuZM12Ec4wMchGs2iVbiUsW2df6LTg9',
+  playlist10: 'PLBXuZM12Ec4zyKAFW2BFqBsSVNTTLJrPI',
+  playlist11: 'PLBXuZM12Ec4z0XHrfDLDNAuJKTW73vc5m',
+  playlist12: 'PLBXuZM12Ec4zUfHATpgAr2pFaX0mY69UH',
+  playlist13: 'PLBXuZM12Ec4z72V3rebh0bvEYP6FN2U6o',
+  playlist14: 'PLBXuZM12Ec4wHc00K-dBNxSPRrOuPtPCZ'
+};
+
+const titles = ['Vídeos Longos', 'Vídeos Curtos'];
+
+// cache local: key -> array (itens) ; se vazio ou erro, armazena [] para evitar re-fetch contínuo
+const playlistCache = {};
+
+/**
+ * Carrega e renderiza a playlist no elemento correspondente.
+ * Retorna um array dos itens (pode ser vazio).
+ * Usa cache quando disponível.
+ */
+async function loadPlaylist(key, title) {
+  const playlistEl = document.getElementById(key);
+  const container = playlistEl.querySelector('.video-grid-portfolio');
+
+  // cria título se ainda não existir
+  if (!playlistEl.querySelector('.playlist-title')) {
+    const h2 = document.createElement('h2');
+    h2.className = 'playlist-title';
+    h2.textContent = title;
+    playlistEl.insertBefore(h2, container);
+  }
+
+  // se já temos cache, renderiza a partir dele e retorna
+  if (Array.isArray(playlistCache[key])) {
+    renderFromItems(container, playlistCache[key]);
+    return playlistCache[key];
+  }
+
+  // se não há ID configurado, armazenamos cache vazio e retornamos []
+  if (!playlists[key]) {
+    container.innerHTML = '';
+    playlistCache[key] = [];
+    return [];
+  }
+
+  // busca via API e grava no cache
+  try {
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=12&playlistId=${playlists[key]}&key=AIzaSyB3Di73heLvjvrv1tDpW__qg0R2eZgzwU8`);
+    const data = await res.json();
+    const items = Array.isArray(data.items) ? data.items : [];
+    playlistCache[key] = items; // salva no cache mesmo que vazio
+    renderFromItems(container, items);
+    return items;
+  } catch (err) {
+    console.error('Erro ao carregar playlist', key, err);
+    playlistCache[key] = []; // evita novas tentativas repetidas
+    container.innerHTML = '';
+    return [];
+  }
+}
+
+/** renderiza mini-cards a partir do array de items do YouTube (ou limpa se vazio) */
+function renderFromItems(container, items) {
+  container.innerHTML = '';
+  if (!items || items.length === 0) return;
+  items.forEach(item => {
+    const vid = item.snippet?.resourceId?.videoId;
+    const thumb = item.snippet?.thumbnails?.high?.url;
+    if (!vid || !thumb) return;
+    const card = document.createElement('div');
+    card.className = 'video-card-portfolio';
+    card.innerHTML = `<img src="${thumb}" alt="Thumbnail">`;
+    card.addEventListener('click', () => window.open(`https://www.youtube.com/watch?v=${vid}`, '_blank'));
+    container.appendChild(card);
+  });
+}
+
+/* --- Pré-carrega todas as playlists em background (popula playlistCache) --- */
+(function preloadAllPlaylists() {
+  Object.keys(playlists).forEach((key, index) => {
+    // inicia a fetch, mas não aguardamos aqui (cada chamada atualiza o cache quando terminar)
+    loadPlaylist(key, titles[index % 2]).catch(()=>{});
+  });
+})();
+
+/* --- clique nos cards --- */
+cardsContainer.querySelectorAll('.card').forEach((card, index) => {
+  card.addEventListener('click', async () => {
+    // reset visual
+    cardsContainer.style.display = 'none';
+    noVideosImg.style.display = 'none';
+    document.querySelectorAll('.playlist').forEach(p => p.style.display = 'none');
+
+    // playlists que correspondem ao card
+    const p1 = index*2 + 1;
+    const p2 = index*2 + 2;
+    const key1 = 'playlist' + p1;
+    const key2 = 'playlist' + p2;
+    const playlist1 = document.getElementById(key1);
+    const playlist2 = document.getElementById(key2);
+
+    // garante que vídeosContainer esteja pronto — mas não bloqueamos (as playlists já tendem a estar no cache)
+    videosContainer.style.display = 'flex';
+    videosContainer.style.flexDirection = 'column';
+    videosContainer.style.alignItems = 'center';
+    videosContainer.style.gap = '40px';
+
+    // usa cache se existir; caso contrário, carregamos (e cache será preenchido dentro da função)
+    // loadPlaylist já retorna array (do cache ou do fetch)
+    const [vids1, vids2] = await Promise.all([
+      loadPlaylist(key1, titles[0]),
+      loadPlaylist(key2, titles[1])
+    ]);
+
+    // Se ambas vazias -> mostra imagem centralizada
+    if ((!vids1 || vids1.length === 0) && (!vids2 || vids2.length === 0)) {
+      videosContainer.style.display = 'none';
+      noVideosImg.style.display = 'block';
+    } else {
+      // mostra somente as playlists que têm conteúdo
+      playlist1.style.display = (vids1 && vids1.length) ? 'flex' : 'none';
+      playlist2.style.display = (vids2 && vids2.length) ? 'flex' : 'none';
+    }
+
+    backArrow.classList.add('show');
+  });
+});
+
+/* botão voltar */
+backArrow.addEventListener('click', () => {
+  cardsContainer.style.display = 'flex';
+  videosContainer.style.display = 'none';
+  noVideosImg.style.display = 'none';
+  backArrow.classList.remove('show');
+});
+</script>
+
+</body>
+</html>
