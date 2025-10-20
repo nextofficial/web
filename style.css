@@ -198,8 +198,8 @@ section.active { display: flex; }
   font-size: 1.3rem;
   cursor: pointer;
 }
-#abouth3 h2{
-  background-color: red;
+#abouth3 div h2{
+  text-align: center;
 }
 @media (max-width: 700px) {
   .video-bg video {
