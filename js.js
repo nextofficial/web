@@ -111,4 +111,34 @@ popup.addEventListener('click', e => {
   if (e.target === popup) popup.classList.add('hidden');
 });
 
+// ==========================
+// EmailJS - Envio do formulário
+// ==========================
 
+// Inicializar EmailJS
+(function() {
+  emailjs.init("L6XLmndJyaTLByeGX");
+})();
+
+// Evento de envio do formulário
+document.getElementById("contactForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const serviceID = "service_7j51m5h";
+  const templateID = "template_4gxsznm";
+
+  emailjs.sendForm(serviceID, templateID, this)
+    .then(() => {
+      document.getElementById("successMessage").style.display = "block";
+      this.reset();
+
+      // Ocultar mensagem após alguns segundos
+      setTimeout(() => {
+        document.getElementById("successMessage").style.display = "none";
+      }, 4000);
+    })
+    .catch((err) => {
+      alert("❌ Erro ao enviar mensagem. Tente novamente.");
+      console.error("Erro ao enviar email:", err);
+    });
+});
